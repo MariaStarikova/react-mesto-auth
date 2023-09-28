@@ -9,9 +9,9 @@ function Main() {
     document.querySelector('.popup_add-card').classList.add('popup_opened');
   }
 
-  function handleEditAvatarClick() {
-    document.querySelector('.popup_update-avatar').classList.add('popup_opened');
-  }
+  // function handleEditAvatarClick() {
+  //   document.querySelector('.popup_update-avatar').classList.add('popup_opened');
+  // }
 
   return (
     <main>
