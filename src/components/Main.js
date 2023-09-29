@@ -1,53 +1,86 @@
+import React, { useEffect } from 'react';
 import profileAvatar from '../images/avatar.svg';
+import { api } from '../utils/Api';
+import Card from './Card';
 
-function Main() {
-  function handleEditProfileClick() {
-    document.querySelector('.popup_edit-profile').classList.add('popup_opened');
-  }
+function Main(props) {
+  const [userName, setUserName] = React.useState(null);
+  const [userDescription, setUserDescription] = React.useState(null);
+  const [userAvatar, setUserAvatar] = React.useState(profileAvatar);
+  const [cards, setCards] = React.useState([]);
 
-  function handleAddPlaceClick() {
-    document.querySelector('.popup_add-card').classList.add('popup_opened');
-  }
+  useEffect(() => {
+    api
+      .getInfoUser()
+      .then(userInfo => {
+        setUserName(userInfo.name);
+        setUserDescription(userInfo.about);
+        setUserAvatar(userInfo.avatar);
+      })
+      .catch(error => {
+        console.error(`Ошибка при получении данных: ${error}`);
+      });
+    api
+      .getInitialCards()
+      .then(cardsData => {
+        // console.log('cardsData:', cardsData);
+        setCards(cardsData);
+      })
+      .catch(error => {
+        console.error(`Ошибка при получении данных: ${error}`);
+      });
+  }, []);
 
-  // function handleEditAvatarClick() {
-  //   document.querySelector('.popup_update-avatar').classList.add('popup_opened');
-  // }
+  // console.log(props.onCardClick);
 
   return (
-    <main>
-      <section className="profile">
-        <div className="profile__container">
-          <img className="profile__avatar" alt="Фото профиля" src={profileAvatar} />
-          <button
-            type="button"
-            className="profile__button-avatar"
-            aria-label="Редактировать фото"
-            onClick={handleEditAvatarClick}
-          ></button>
-        </div>
-        <div className="profile__info">
-          <div className="profile__name">
-            <h1 className="profile__title">Жак-Ив Кусто</h1>
+    <>
+      <main>
+        <section className="profile">
+          <div className="profile__container">
+            <img
+              className="profile__avatar"
+              alt="Фото профиля"
+              src={userAvatar}
+              style={{ backgroundImage: `url(${userAvatar})` }}
+            />
             <button
               type="button"
-              className="profile__edit-button"
-              aria-label="Редактировать"
-              onClick={handleEditProfileClick}
+              className="profile__button-avatar"
+              aria-label="Редактировать фото"
+              onClick={props.onEditAvatar}
             ></button>
           </div>
-          <p className="profile__subtitle">Исследователь океана</p>
-        </div>
-        <button
-          type="submit"
-          className="profile__add-button"
-          aria-label="Добавить контент"
-          onClick={handleAddPlaceClick}
-        ></button>
-      </section>
-      <section className="elements">
-        <ul className="elements__list"></ul>
-      </section>
-    </main>
+          <div className="profile__info">
+            <div className="profile__name">
+              <h1 className="profile__title">{userName}</h1>
+              <button
+                type="button"
+                className="profile__edit-button"
+                aria-label="Редактировать"
+                onClick={props.onEditProfile}
+              ></button>
+            </div>
+            <p className="profile__subtitle">{userDescription}</p>
+          </div>
+          <button
+            type="submit"
+            className="profile__add-button"
+            aria-label="Добавить контент"
+            onClick={props.onAddPlace}
+          ></button>
+        </section>
+        <section className="elements">
+          <ul className="elements__list">
+            {cards.map((card, i) => (
+              <li key={card._id}>
+                <Card card={card} onCardClick={props.onCardClick} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+    </>
   );
 }
 
