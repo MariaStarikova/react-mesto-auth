@@ -11,7 +11,7 @@ function Card({ onCardClick, card }) {
         <h2 className="element__title">{card.name}</h2>
         <div className="element__likes">
           <button type="button" className="element__button-like" aria-label="Нравиться"></button>
-          <span className="element__like-number"></span>
+          <span className="element__like-number">{card.likes.length}</span>
         </div>
       </div>
     </div>

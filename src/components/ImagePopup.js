@@ -9,8 +9,8 @@ function ImagePopup(props) {
           className="popup__close-button popup__close-button_view"
           onClick={props.onClose}
         ></button>
-        <img className="popup__image" alt="Увеличенное изображение" src={card ? card.link : ''} />
-        <h2 className="popup__title-image">Заголовок изображения</h2>
+        <img className="popup__image" alt={card?.name} src={card ? card.link : ''} />
+        <h2 className="popup__title-image">{card?.name}</h2>
       </div>
     </div>
   );
