@@ -22,14 +22,4 @@ function PopupWithForm(props) {
   );
 }
 
-const PopupRemove = () => {
-  return (
-    <>
-      <button type="submit" className="popup__button popup__button_remove" aria-label="Сохранить">
-        Да
-      </button>
-    </>
-  );
-};
-
-export { PopupWithForm, PopupRemove };
+export { PopupWithForm };
