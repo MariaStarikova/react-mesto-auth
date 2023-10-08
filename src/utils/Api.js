@@ -34,7 +34,10 @@ export class Api {
         authorization: this.headers.authorization,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newCardData)
+      body: JSON.stringify({
+        name: newCardData.description,
+        link: newCardData.image
+      })
     }).then(this._checkResponse);
   }
 
@@ -65,12 +68,12 @@ export class Api {
     }).then(this._checkResponse);
   }
 
-  updateUserAvatar(avatarLink) {
+  updateUserAvatar(data) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
-        avatar: avatarLink
+        avatar: data.avatar
       })
     }).then(this._checkResponse);
   }
