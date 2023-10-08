@@ -28,8 +28,6 @@ function App() {
           avatar: userInfo.avatar,
           id: userInfo._id
         });
-        // setCurrentUser({ userInfo });
-        // setCurrentUser({ name, about, avatar });
         console.log(userInfo);
       })
       .catch(error => {
