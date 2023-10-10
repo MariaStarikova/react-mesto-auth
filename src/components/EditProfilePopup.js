@@ -8,11 +8,11 @@ function EditProfilePopup(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && props.isOpen) {
       setName(currentUser.name);
       setDescription(currentUser.about);
     }
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -36,6 +36,7 @@ function EditProfilePopup(props) {
     <PopupWithForm
       title="Редактировать профиль"
       name="edit"
+      buttonText="Сохранить"
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
@@ -66,9 +67,6 @@ function EditProfilePopup(props) {
         required
       />
       <span className="popup__input-error input-description-error"></span>
-      <button type="submit" className="popup__button" aria-label="Сохранить">
-        Сохранить
-      </button>
     </PopupWithForm>
   );
 }

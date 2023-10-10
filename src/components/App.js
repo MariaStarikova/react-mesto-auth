@@ -80,12 +80,10 @@ function App() {
       .deleteCard(selectedCardToDelete._id)
       .then(() => {
         setCards(cards => cards.filter(c => c._id !== selectedCardToDelete._id));
+        closeAllPopups();
       })
       .catch(err => {
         console.error(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        closeAllPopups();
       });
   }
 
@@ -125,24 +123,31 @@ function App() {
   function handleUpdateUser(user) {
     api
       .updateUserInfo(user)
-      .then(user => setCurrentUser(user))
+      .then(updatedFields => {
+        setCurrentUser(prevUser => ({
+          ...prevUser,
+          name: updatedFields.name || prevUser.name,
+          about: updatedFields.about || prevUser.about
+        }));
+        closeAllPopups();
+      })
       .catch(err => {
         console.error(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        closeAllPopups();
       });
   }
 
   function handleUpdateAvatar(data) {
     api
       .updateUserAvatar(data)
-      .then(data => setCurrentUser(data))
+      .then(updatedData => {
+        setCurrentUser(prevUser => ({
+          ...prevUser,
+          avatar: updatedData.avatar || prevUser.avatar
+        }));
+        closeAllPopups();
+      })
       .catch(err => {
         console.error(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        closeAllPopups();
       });
   }
 
@@ -151,11 +156,9 @@ function App() {
       .addNewCard(card)
       .then(newCard => {
         setCards([newCard, ...cards]);
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
         closeAllPopups();
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   return (
