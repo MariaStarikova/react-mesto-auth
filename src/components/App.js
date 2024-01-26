@@ -63,6 +63,7 @@ function App() {
             id: userInfo._id
           });
           console.log("проверка");
+          console.log("проверка V2");
           setCards(cardsData);
         })
         .catch(error => {
