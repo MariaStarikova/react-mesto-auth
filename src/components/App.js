@@ -62,6 +62,7 @@ function App() {
             avatar: userInfo.avatar,
             id: userInfo._id
           });
+          console.log("проверка");
           setCards(cardsData);
         })
         .catch(error => {
